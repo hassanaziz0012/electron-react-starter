@@ -1,0 +1,69 @@
+{
+  "name": "electron-react-starter",
+  "version": "1.0.0",
+  "description": "Electron + React + TypeScript + Tailwind v4, built with webpack",
+  "author": "Hassan Aziz",
+  "main": "dist/main/bundle.js",
+  "scripts": {
+    "start:electron": "electronmon .",
+    "dev:main": "webpack --config webpack/webpack.main.js --watch",
+    "dev:renderer": "webpack serve --config webpack/webpack.renderer.js",
+    "dev": "cross-env NODE_ENV=development concurrently --names \"react,main,electron\" --prefix-colors \"blue,red,magenta\" --kill-others --kill-others-on-fail \"npm run dev:renderer\" \"npm run dev:main\" \"wait-on http://localhost:3000 dist/main/bundle.js && npm run start:electron\"",
+    "build:main": "webpack --config webpack/webpack.main.js",
+    "build:renderer": "webpack --config webpack/webpack.renderer.js",
+    "build": "cross-env NODE_ENV=production npm run build:main && cross-env NODE_ENV=production npm run build:renderer",
+    "package": "npm run build && electron-builder"
+  },
+  "build": {
+    "appId": "com.hassanaziz.electronreactstarter",
+    "productName": "Electron React Starter",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "dist/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "electronmon": {
+    "patterns": [
+      "!src/**",
+      "!build/**"
+    ]
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "concurrently": "^10.0.6",
+    "cross-env": "^10.1.0",
+    "css-loader": "^7.1.5",
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "electronmon": "^2.0.4",
+    "html-webpack-plugin": "^5.6.8",
+    "mini-css-extract-plugin": "^2.10.2",
+    "postcss": "^8.5.29",
+    "postcss-loader": "^8.2.1",
+    "tailwindcss": "^4.3.3",
+    "ts-loader": "^9.6.2",
+    "typescript": "^6.0.3",
+    "wait-on": "^9.5.1",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.0.0"
+  }
+}
